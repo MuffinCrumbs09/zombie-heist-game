@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 611f23cc78bca884e8d0a9b29ba1b408, type: 3}
+  m_Name: Config
+  m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerMovementConfig
+  walkSpeed: 4
+  sprintSpeed: 7
+  crouchSpeed: 2
+  adsSpeedMultiplier: 0.5
+  accelerationTime: 0.2
+  decelerationTime: 0.1
+  adsAccelerationTime: 0.3
+  jumpHeight: 1.5
+  gravity: 18
+  coyoteTime: 0.12
+  slideSpeedImpulse: 15
+  slideDuration: 1
+  slideCameraHeight: 0.6
+  crouchCameraHeight: 1.1
+  standingCameraHeight: 1.8
+  crouchTransitionSpeed: 8
+  groundCheckRadius: 0.25
+  groundCheckDistance: 0.37
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 64
+  landingRecoveryDuration: 0.15
+  headBobAmplitude: 0.05
+  headBobFrequency: 1.5
+  headBobDampTime: 0.15
+  swaySensitivity: 0.6
+  swaySmoothTime: 0.08
+  maxSwayAngle: 4
+  fovBase: 90
+  fovSprintKick: 8
+  fovAds: 55
+  fovLerpSpeed: 8
+  minFallDistanceForDip: 1
+  loudLandingFallDistance: 3.5
+  landingDipStrength: 0.15
+  landingDipRecoverySpeed: 6
+  walkNoiseProfile:
+    radius: 0
+    heatWeight: 0
+    leavesScentTrail: 0
+  sprintNoiseProfile:
+    radius: 2
+    heatWeight: 2
+    leavesScentTrail: 1
+  slideNoiseProfile:
+    radius: 1
+    heatWeight: 1
+    leavesScentTrail: 1
+  loudLandingNoiseProfile:
+    radius: 3
+    heatWeight: 3
+    leavesScentTrail: 0
