@@ -18,6 +18,7 @@ namespace PlayerInput
 
         // Events
         public event Action OnJumpPressed;
+        public event Action OnInventoryPressed;
 
         private Controls _controls;
 
@@ -89,6 +90,14 @@ namespace PlayerInput
         public void OnSlide(InputAction.CallbackContext context)
         {
             IsSliding = context.ReadValueAsButton();
+        }
+
+        public void OnInventory(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                OnInventoryPressed?.Invoke();
+            }
         }
     }
 }

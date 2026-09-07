@@ -24,7 +24,7 @@ MonoBehaviour:
   coyoteTime: 0.12
   slideSpeedImpulse: 15
   slideDuration: 1
-  slideCameraHeight: 0.6
+  slideCameraHeight: 0.9
   crouchCameraHeight: 1.1
   standingCameraHeight: 1.8
   crouchTransitionSpeed: 8

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Player
 {
-    [CreateAssetMenu(fileName = "New PlayerMovementConfig", menuName = "Player/Player Movement Config")]
+    [CreateAssetMenu(fileName = "New PlayerMovementConfig", menuName = "ZHG/Player Movement Config")]
     public class PlayerMovementConfig : ScriptableObject
     {
         [Header("Ground Speeds")]
