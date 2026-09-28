@@ -15,6 +15,7 @@ namespace PlayerInput
         public bool IsSprinting { get; private set; }
         public bool IsCrouching { get; private set; }
         public bool IsSliding { get; private set; }
+        public bool IsFiring { get; private set; }
 
         // Events
         public event Action OnJumpPressed;
@@ -89,6 +90,11 @@ namespace PlayerInput
         public void OnSlide(InputAction.CallbackContext context)
         {
             IsSliding = context.ReadValueAsButton();
+        }
+
+        public void OnFire(InputAction.CallbackContext context)
+        {
+            IsFiring = context.ReadValueAsButton();
         }
     }
 }

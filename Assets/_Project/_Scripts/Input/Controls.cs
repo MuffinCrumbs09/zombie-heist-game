@@ -147,6 +147,15 @@ namespace PlayerInput
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Fire"",
+                    ""type"": ""Button"",
+                    ""id"": ""8c68dd92-5cd0-4bd1-909e-1d2516cd9ebf"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -259,6 +268,17 @@ namespace PlayerInput
                     ""action"": ""Slide"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4c6a355b-ed8b-48b1-b183-ae6b9fd22cd3"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";KBM"",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -290,6 +310,7 @@ namespace PlayerInput
             m_Foot_Sprint = m_Foot.FindAction("Sprint", throwIfNotFound: true);
             m_Foot_Crouch = m_Foot.FindAction("Crouch", throwIfNotFound: true);
             m_Foot_Slide = m_Foot.FindAction("Slide", throwIfNotFound: true);
+            m_Foot_Fire = m_Foot.FindAction("Fire", throwIfNotFound: true);
         }
 
         ~@Controls()
@@ -376,6 +397,7 @@ namespace PlayerInput
         private readonly InputAction m_Foot_Sprint;
         private readonly InputAction m_Foot_Crouch;
         private readonly InputAction m_Foot_Slide;
+        private readonly InputAction m_Foot_Fire;
         /// <summary>
         /// Provides access to input actions defined in input action map "Foot".
         /// </summary>
@@ -411,6 +433,10 @@ namespace PlayerInput
             /// Provides access to the underlying input action "Foot/Slide".
             /// </summary>
             public InputAction @Slide => m_Wrapper.m_Foot_Slide;
+            /// <summary>
+            /// Provides access to the underlying input action "Foot/Fire".
+            /// </summary>
+            public InputAction @Fire => m_Wrapper.m_Foot_Fire;
             /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
@@ -455,6 +481,9 @@ namespace PlayerInput
                 @Slide.started += instance.OnSlide;
                 @Slide.performed += instance.OnSlide;
                 @Slide.canceled += instance.OnSlide;
+                @Fire.started += instance.OnFire;
+                @Fire.performed += instance.OnFire;
+                @Fire.canceled += instance.OnFire;
             }
 
             /// <summary>
@@ -484,6 +513,9 @@ namespace PlayerInput
                 @Slide.started -= instance.OnSlide;
                 @Slide.performed -= instance.OnSlide;
                 @Slide.canceled -= instance.OnSlide;
+                @Fire.started -= instance.OnFire;
+                @Fire.performed -= instance.OnFire;
+                @Fire.canceled -= instance.OnFire;
             }
 
             /// <summary>
@@ -579,6 +611,13 @@ namespace PlayerInput
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnSlide(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Fire" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnFire(InputAction.CallbackContext context);
         }
     }
 }
