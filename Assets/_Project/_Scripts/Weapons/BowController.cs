@@ -3,9 +3,12 @@ using PlayerInput;
 
 public class BowController : MonoBehaviour
 {
+    public readonly static int BowIsFiringHash = Animator.StringToHash("IsFiring");
+
     public GameObject arrowPrefab;
     public Transform arrowSpawnPoint;
     public Camera playerCamera;
+    public Animator bowAnimator;
 
     public float minForce = 5f;
     public float maxForce = 40f;
@@ -16,6 +19,8 @@ public class BowController : MonoBehaviour
 
     private void Update()
     {
+        bowAnimator.SetBool(BowIsFiringHash, InputManager.Instance.IsFiring);
+
         if(InputManager.Instance.IsFiring && !isDrawing)
         {
             isDrawing = true;
@@ -26,9 +31,11 @@ public class BowController : MonoBehaviour
         {
             float drawTime = Mathf.Clamp(Time.time - drawStartTime, 0, maxDrawTime);
             float t = drawTime / maxDrawTime;
-            float foce = Mathf.Lerp(minForce, maxForce, t);
+            float force = Mathf.Lerp(minForce, maxForce, t);
 
-            ShootArrow(foce);
+            Debug.Log($"Draw Time: {drawTime}, T: {t}, Force: {force}");
+
+            ShootArrow(force);
             isDrawing = false;
         }
     }

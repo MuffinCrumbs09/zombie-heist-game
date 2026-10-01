@@ -14,6 +14,7 @@ namespace Player
         [SerializeField] private Transform _cameraTransform;
         [SerializeField] private PlayerMovementConfig _config;
         [SerializeField] private float _slideCooldownTime = 3.5f;
+        [SerializeField] private Camera[] cameras;
 
         // Runtime
         private bool _isSwitchingStates = false;
@@ -92,7 +93,11 @@ namespace Player
         private void UpdateCameraEffects()
         {
             float targetFOV = _curState.GetTargetFOV();
-            Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, targetFOV, _config.fovLerpSpeed * Time.deltaTime);
+
+            foreach (Camera cam in cameras)
+            {
+                cam.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, targetFOV, _config.fovLerpSpeed * Time.deltaTime);
+            }
         }
 
         /// <summary>

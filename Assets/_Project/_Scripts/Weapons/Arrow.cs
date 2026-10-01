@@ -33,5 +33,6 @@ public class Arrow : MonoBehaviour
         hasCollided = true;
         _rb.isKinematic = true; // stop it dead, stick in place
         transform.SetParent(collision.transform); // parents to the object it hit, so it moves with it
+        GetComponent<Collider>().enabled = false; // disable the collider so it doesn't interfere with other physics
     }
 }
