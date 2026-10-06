@@ -1239,30 +1239,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bow
       objectReference: {fileID: 0}
-    - target: {fileID: 1562089464485924627, guid: 86e1b51263cf46443931973142d546f6, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4200673169487684638, guid: 86e1b51263cf46443931973142d546f6, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
     - target: {fileID: 4805114538701585548, guid: 86e1b51263cf46443931973142d546f6, type: 3}
       propertyPath: playerCamera
       value: 
       objectReference: {fileID: 330585545}
-    - target: {fileID: 4850921351270085219, guid: 86e1b51263cf46443931973142d546f6, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4850921351270085219, guid: 86e1b51263cf46443931973142d546f6, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4850921351270085219, guid: 86e1b51263cf46443931973142d546f6, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.8
-      objectReference: {fileID: 0}
     - target: {fileID: 4850921351270085219, guid: 86e1b51263cf46443931973142d546f6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.4999998
@@ -1302,18 +1282,6 @@ PrefabInstance:
     - target: {fileID: 4850921351270085219, guid: 86e1b51263cf46443931973142d546f6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -180
-      objectReference: {fileID: 0}
-    - target: {fileID: 5161435517589906556, guid: 86e1b51263cf46443931973142d546f6, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 5270177441028310311, guid: 86e1b51263cf46443931973142d546f6, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 5272894570700337400, guid: 86e1b51263cf46443931973142d546f6, type: 3}
-      propertyPath: m_Layer
-      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

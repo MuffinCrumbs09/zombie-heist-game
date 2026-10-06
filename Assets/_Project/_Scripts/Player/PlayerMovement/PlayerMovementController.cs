@@ -66,7 +66,9 @@ namespace Player
         {
             InputManager.Instance.OnJumpPressed += TryJump;
             _characterController = GetComponent<CharacterController>();
+
             _curState = new PlayerIdleState();
+            _curState.EnterState(this);
 
             _currentHeight = _config.standingCameraHeight;
             _targetHeight = _config.standingCameraHeight;

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3949443337775936901}
   m_Layer: 0
   m_Name: Arrow
-  m_TagString: Untagged
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -75,6 +75,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Arrow
   rotationSpeed: 10
+  ignoreTags:
+  - Player
+  - Projectile
 --- !u!65 &3949443337775936901
 BoxCollider:
   m_ObjectHideFlags: 0

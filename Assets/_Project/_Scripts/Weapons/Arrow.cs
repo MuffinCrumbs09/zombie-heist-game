@@ -4,8 +4,9 @@ using UnityEngine;
 public class Arrow : MonoBehaviour
 {
     private Rigidbody _rb;
-    public float rotationSpeed = 10f;
+    [SerializeField] private float rotationSpeed = 10f;
     private bool hasCollided = false;
+    [SerializeField, Tooltip("Tags of objects to ignore collisions with")] private string[] ignoreTags;
 
     private void Start()
     {
@@ -28,8 +29,12 @@ public class Arrow : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Player")) return; // don't stick to player
-        
+        foreach (string tag in ignoreTags)
+        {
+            string collisionTag = collision.gameObject.tag.ToLower();
+            if (collisionTag == tag.ToLower()) return;
+        }
+
         hasCollided = true;
         _rb.isKinematic = true; // stop it dead, stick in place
         transform.SetParent(collision.transform); // parents to the object it hit, so it moves with it

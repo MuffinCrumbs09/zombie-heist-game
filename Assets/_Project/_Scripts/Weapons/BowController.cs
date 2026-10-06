@@ -5,14 +5,15 @@ public class BowController : MonoBehaviour
 {
     public readonly static int BowIsFiringHash = Animator.StringToHash("IsFiring");
 
-    public GameObject arrowPrefab;
-    public Transform arrowSpawnPoint;
-    public Camera playerCamera;
-    public Animator bowAnimator;
+    [SerializeField] private GameObject arrowPrefab;
+    [SerializeField] private Transform arrowSpawnPoint;
+    [SerializeField] private Camera playerCamera;
+    [SerializeField] private Animator bowAnimator;
+    [SerializeField] private GameObject viewArrowModel;
 
-    public float minForce = 5f;
-    public float maxForce = 40f;
-    public float maxDrawTime = 2f;
+    [SerializeField] private float minForce = 5f;
+    [SerializeField] private float maxForce = 40f;
+    [SerializeField] private float maxDrawTime = 2f;
 
     private float drawStartTime;
     private bool isDrawing = false;
@@ -20,6 +21,7 @@ public class BowController : MonoBehaviour
     private void Update()
     {
         bowAnimator.SetBool(BowIsFiringHash, InputManager.Instance.IsFiring);
+        viewArrowModel.SetActive(isDrawing);
 
         if(InputManager.Instance.IsFiring && !isDrawing)
         {
