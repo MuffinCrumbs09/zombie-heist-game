@@ -19,6 +19,7 @@ namespace PlayerInput
 
         // Events
         public event Action OnJumpPressed;
+        public event Action OnReloadPressed;
 
         private Controls _controls;
 
@@ -95,6 +96,12 @@ namespace PlayerInput
         public void OnFire(InputAction.CallbackContext context)
         {
             IsFiring = context.ReadValueAsButton();
+        }
+
+        public void OnReload(InputAction.CallbackContext context)
+        {
+            if(context.performed)
+                OnReloadPressed?.Invoke();
         }
     }
 }

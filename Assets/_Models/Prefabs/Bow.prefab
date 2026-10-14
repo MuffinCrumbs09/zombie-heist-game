@@ -81,6 +81,8 @@ MonoBehaviour:
   minForce: 5
   maxForce: 40
   maxDrawTime: 2
+  maxAmmo: 8
+  maxAmmoPerClip: 1
 --- !u!1 &2121739680618381744
 GameObject:
   m_ObjectHideFlags: 0
@@ -515,6 +517,14 @@ PrefabInstance:
     - target: {fileID: 2638870370712645592, guid: 44925161db6fe4f4a898c9b69f03bd92, type: 3}
       propertyPath: m_Name
       value: Arrow
+      objectReference: {fileID: 0}
+    - target: {fileID: 2638870370712645592, guid: 44925161db6fe4f4a898c9b69f03bd92, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6197537725790828757, guid: 44925161db6fe4f4a898c9b69f03bd92, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7383931050803129186, guid: 44925161db6fe4f4a898c9b69f03bd92, type: 3}
       propertyPath: m_LocalPosition.x

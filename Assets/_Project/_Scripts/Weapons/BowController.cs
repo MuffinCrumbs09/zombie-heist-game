@@ -1,7 +1,8 @@
 using UnityEngine;
 using PlayerInput;
+using System.Collections;
 
-public class BowController : MonoBehaviour
+public class BowController : MonoBehaviour, IAmmo
 {
     public readonly static int BowIsFiringHash = Animator.StringToHash("IsFiring");
 
@@ -18,18 +19,43 @@ public class BowController : MonoBehaviour
     private float drawStartTime;
     private bool isDrawing = false;
 
+    #region Ammunition
+    private int _ammo;
+    [SerializeField] private int maxAmmo = 8;
+    [SerializeField] private int maxAmmoPerClip = 1;
+    #endregion
+
+    private void OnEnable()
+    {
+        if (InputManager.Instance != null)
+            InputManager.Instance.OnReloadPressed += Reload;
+
+    }
+
+    private void OnDisable()
+    {
+        InputManager.Instance.OnReloadPressed -= Reload;
+    }
+
+    void Start()
+    {
+        _ammo = maxAmmoPerClip;
+        AmmoManager.Instance.SetCurrentWeapon(this);
+        InputManager.Instance.OnReloadPressed += Reload;
+    }
+
     private void Update()
     {
-        bowAnimator.SetBool(BowIsFiringHash, InputManager.Instance.IsFiring);
-        viewArrowModel.SetActive(isDrawing);
+        bowAnimator.SetBool(BowIsFiringHash, InputManager.Instance.IsFiring && _ammo > 0);
+        viewArrowModel.SetActive(_ammo > 0);
 
-        if(InputManager.Instance.IsFiring && !isDrawing)
+        if (InputManager.Instance.IsFiring && !isDrawing && CanShoot())
         {
             isDrawing = true;
             drawStartTime = Time.time;
         }
 
-        if(!InputManager.Instance.IsFiring && isDrawing)
+        if (!InputManager.Instance.IsFiring && isDrawing)
         {
             float drawTime = Mathf.Clamp(Time.time - drawStartTime, 0, maxDrawTime);
             float t = drawTime / maxDrawTime;
@@ -44,8 +70,33 @@ public class BowController : MonoBehaviour
 
     private void ShootArrow(float force)
     {
+        _ammo -= 1; maxAmmo -= 1;
+
         GameObject arrow = Instantiate(arrowPrefab, arrowSpawnPoint.position, playerCamera.transform.rotation);
         Rigidbody rb = arrow.GetComponent<Rigidbody>();
         rb.AddForce(playerCamera.transform.forward * force, ForceMode.VelocityChange);
     }
+
+    private void Reload()
+    {
+        if (_ammo == maxAmmoPerClip || maxAmmo == 0)
+            return;
+
+        int toAdd = maxAmmoPerClip - _ammo;
+        StartCoroutine(ReloadCoroutine(toAdd));
+    }
+
+    private IEnumerator ReloadCoroutine(int amountToAdd)
+    {
+        yield return new WaitForSeconds(1.5f);
+        _ammo += amountToAdd;
+    }
+
+    private bool CanShoot() => _ammo > 0;
+
+    public int GetAmmo() => _ammo;
+
+    public int GetMaxAmmo() => maxAmmo;
+
+    public int GetMaxAmmoPerClip() => maxAmmoPerClip;
 }
