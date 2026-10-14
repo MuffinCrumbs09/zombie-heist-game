@@ -88,8 +88,10 @@ public class BowController : MonoBehaviour, IAmmo
 
     private IEnumerator ReloadCoroutine(int amountToAdd)
     {
+        AmmoManager.Instance.IsReloading(true);
         yield return new WaitForSeconds(1.5f);
         _ammo += amountToAdd;
+        AmmoManager.Instance.IsReloading(false);
     }
 
     private bool CanShoot() => _ammo > 0;
