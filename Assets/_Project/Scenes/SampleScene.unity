@@ -1674,6 +1674,7 @@ MonoBehaviour:
   cameras:
   - {fileID: 330585545}
   - {fileID: 1529687443}
+  weapon: {fileID: 5831733803365633122}
   stateText: {fileID: 1416612066}
 --- !u!4 &1923333202
 Transform:
@@ -1748,6 +1749,10 @@ PrefabInstance:
       propertyPath: playerCamera
       value: 
       objectReference: {fileID: 330585545}
+    - target: {fileID: 4805114538701585548, guid: 86e1b51263cf46443931973142d546f6, type: 3}
+      propertyPath: weaponPositions
+      value: 
+      objectReference: {fileID: 11400000, guid: 69c4ee9a0adc99a4982074961dc5f4de, type: 2}
     - target: {fileID: 4850921351270085219, guid: 86e1b51263cf46443931973142d546f6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.4999998
@@ -1798,6 +1803,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4850921351270085219, guid: 86e1b51263cf46443931973142d546f6, type: 3}
   m_PrefabInstance: {fileID: 2657725004244062162}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5831733803365633122 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4805114538701585548, guid: 86e1b51263cf46443931973142d546f6, type: 3}
+  m_PrefabInstance: {fileID: 2657725004244062162}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 199c290a26948c64e98e7ebace017eb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BowController
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

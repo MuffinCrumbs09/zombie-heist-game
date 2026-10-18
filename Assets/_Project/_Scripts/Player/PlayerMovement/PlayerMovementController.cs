@@ -16,6 +16,9 @@ namespace Player
         [SerializeField] private float _slideCooldownTime = 3.5f;
         [SerializeField] private Camera[] cameras;
 
+        // Temporary bow setter until weapon class has been made
+        [SerializeField] private BowController weapon;
+
         // Runtime
         private bool _isSwitchingStates = false;
         private IMovementState _curState;
@@ -32,10 +35,13 @@ namespace Player
         private float _heightVelocity;
         private bool _slideCooldown;
 
+        private bool _isCrouching => _curState is PlayerCrouchState;
+
         // Getters / Setters
         public PlayerMovementConfig Config => _config;
         public bool CanJump => _canJump;
         public bool IsGrounded => _isGrounded;
+        public bool IsCrouching => _isCrouching;
         public float HorizontalSpeed => new Vector3(_currentVelocity.x, 0, _currentVelocity.z).magnitude;
         public float VerticalVelocity
         {
@@ -86,6 +92,19 @@ namespace Player
             UpdateGroundCheck();
             UpdateHeight(Time.deltaTime);
             UpdateCameraEffects();
+
+            // Move this to base ranged weapon script (when created) with _isCrouching getter??
+
+
+            if (InputManager.Instance.IsAiming)
+            {
+                if (_curState is PlayerCrouchState || _curState is PlayerWalkState || _curState is PlayerIdleState)
+                    weapon.UpdateState(_isCrouching ? WeaponStates.CrouchAiming : WeaponStates.Aiming);
+            }
+            else
+                weapon.UpdateState(_isCrouching ? WeaponStates.Crouching : WeaponStates.Idle);
+
+
 
 #if UNITY_EDITOR
             UpdateDebugText();

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23f888379a4194f43aa024e995180896, type: 3}
+  m_Name: Bow Weapon Positions
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponPositions
+  IdlePosition: {x: 1.4999998, y: -0.29999962, z: 2.4999998}
+  IdleRotation: {x: 270, y: 0, z: 0}
+  AimPosition: {x: 0.83, y: -0.1, z: 1.83}
+  AimRotation: {x: 270.8365, y: 97.48231, z: 277.49432}
+  CrouchPosition: {x: 0.489, y: -0.323, z: 1.819}
+  CrouchRotation: {x: 4.5057735, y: 268.72977, z: 93.09367}
+  CrouchAimPosition: {x: 0.489, y: -0.323, z: 1.44}
+  CrouchAimRotation: {x: 4.5057735, y: 268.72977, z: 93.09367}

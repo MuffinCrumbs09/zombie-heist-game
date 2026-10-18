@@ -16,6 +16,7 @@ namespace PlayerInput
         public bool IsCrouching { get; private set; }
         public bool IsSliding { get; private set; }
         public bool IsFiring { get; private set; }
+        public bool IsAiming { get; private set; }
 
         // Events
         public event Action OnJumpPressed;
@@ -102,6 +103,11 @@ namespace PlayerInput
         {
             if(context.performed)
                 OnReloadPressed?.Invoke();
+        }
+
+        public void OnAim(InputAction.CallbackContext context)
+        {
+            IsAiming = context.ReadValueAsButton();
         }
     }
 }

@@ -42,7 +42,7 @@ MonoBehaviour:
   maxSwayAngle: 4
   fovBase: 90
   fovSprintKick: 8
-  fovAds: 55
+  fovAds: 70
   fovLerpSpeed: 8
   minFallDistanceForDip: 1
   loudLandingFallDistance: 3.5

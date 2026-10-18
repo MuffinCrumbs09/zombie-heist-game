@@ -2,6 +2,14 @@ using UnityEngine;
 using PlayerInput;
 using System.Collections;
 
+public enum WeaponStates
+{
+    Idle,
+    Aiming,
+    Crouching,
+    CrouchAiming
+}
+
 public class BowController : MonoBehaviour, IAmmo
 {
     public readonly static int BowIsFiringHash = Animator.StringToHash("IsFiring");
@@ -15,6 +23,9 @@ public class BowController : MonoBehaviour, IAmmo
     [SerializeField] private float minForce = 5f;
     [SerializeField] private float maxForce = 40f;
     [SerializeField] private float maxDrawTime = 2f;
+
+    [SerializeField] private WeaponPositions weaponPositions;
+    private WeaponStates state = WeaponStates.Idle;
 
     private float drawStartTime;
     private bool isDrawing = false;
@@ -48,6 +59,7 @@ public class BowController : MonoBehaviour, IAmmo
     {
         bowAnimator.SetBool(BowIsFiringHash, InputManager.Instance.IsFiring && _ammo > 0);
         viewArrowModel.SetActive(_ammo > 0);
+        UpdateWeaponPosition();
 
         if (InputManager.Instance.IsFiring && !isDrawing && CanShoot())
         {
@@ -92,6 +104,47 @@ public class BowController : MonoBehaviour, IAmmo
         yield return new WaitForSeconds(1.5f);
         _ammo += amountToAdd;
         AmmoManager.Instance.IsReloading(false);
+    }
+
+    Vector3 targetPosition;
+    Vector3 targetRotation;
+    WeaponStates oldState;
+    private void UpdateWeaponPosition()
+    {
+        if (state != oldState)
+        {
+            switch (state)
+            {
+                case WeaponStates.Idle:
+                    targetPosition = weaponPositions.IdlePosition;
+                    targetRotation = weaponPositions.IdleRotation;
+                    break;
+                case WeaponStates.Aiming:
+                    targetPosition = weaponPositions.AimPosition;
+                    targetRotation = weaponPositions.AimRotation;
+                    break;
+                case WeaponStates.Crouching:
+                    targetPosition = weaponPositions.CrouchPosition;
+                    targetRotation = weaponPositions.CrouchRotation;
+                    break;
+                case WeaponStates.CrouchAiming:
+                    targetPosition = weaponPositions.CrouchAimPosition;
+                    targetRotation = weaponPositions.CrouchAimRotation;
+                    break;
+            }
+            oldState = state;
+        }
+
+        if(targetPosition == Vector3.zero || targetRotation == Vector3.zero)
+            return;
+
+        transform.localPosition = targetPosition;
+        transform.localEulerAngles = targetRotation;
+    }
+
+    public void UpdateState(WeaponStates newState)
+    {
+        state= newState;
     }
 
     private bool CanShoot() => _ammo > 0;

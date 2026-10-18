@@ -15,13 +15,13 @@ public class AmmoManager : MonoBehaviour
 
     private bool _isReloading;
 
-    private IAmmo _curWeapon;
+    [HideInInspector] public IAmmo _curWeapon { get; private set; }
 
     private void Awake()
     {
-        if(Instance != null && Instance != this)
+        if (Instance != null && Instance != this)
             Destroy(this);
-        
+
         Instance = this;
     }
 

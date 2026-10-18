@@ -1,5 +1,6 @@
 using UnityEngine;
 using PlayerInput;
+using Unity.VisualScripting;
 
 namespace Player
 {
@@ -36,7 +37,7 @@ namespace Player
 
         public float GetTargetFOV()
         {
-            return config.fovBase;
+            return InputManager.Instance.IsAiming ? config.fovAds : config.fovBase; 
         }
     }
 }

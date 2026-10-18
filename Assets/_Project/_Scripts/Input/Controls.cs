@@ -165,6 +165,15 @@ namespace PlayerInput
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Aim"",
+                    ""type"": ""Button"",
+                    ""id"": ""a4b4f7e4-af36-4990-aa7c-94c9e43dab53"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -299,6 +308,17 @@ namespace PlayerInput
                     ""action"": ""Reload"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e6e72841-1a56-40d6-914d-cf9c1457a775"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";KBM"",
+                    ""action"": ""Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -332,6 +352,7 @@ namespace PlayerInput
             m_Foot_Slide = m_Foot.FindAction("Slide", throwIfNotFound: true);
             m_Foot_Fire = m_Foot.FindAction("Fire", throwIfNotFound: true);
             m_Foot_Reload = m_Foot.FindAction("Reload", throwIfNotFound: true);
+            m_Foot_Aim = m_Foot.FindAction("Aim", throwIfNotFound: true);
         }
 
         ~@Controls()
@@ -420,6 +441,7 @@ namespace PlayerInput
         private readonly InputAction m_Foot_Slide;
         private readonly InputAction m_Foot_Fire;
         private readonly InputAction m_Foot_Reload;
+        private readonly InputAction m_Foot_Aim;
         /// <summary>
         /// Provides access to input actions defined in input action map "Foot".
         /// </summary>
@@ -463,6 +485,10 @@ namespace PlayerInput
             /// Provides access to the underlying input action "Foot/Reload".
             /// </summary>
             public InputAction @Reload => m_Wrapper.m_Foot_Reload;
+            /// <summary>
+            /// Provides access to the underlying input action "Foot/Aim".
+            /// </summary>
+            public InputAction @Aim => m_Wrapper.m_Foot_Aim;
             /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
@@ -513,6 +539,9 @@ namespace PlayerInput
                 @Reload.started += instance.OnReload;
                 @Reload.performed += instance.OnReload;
                 @Reload.canceled += instance.OnReload;
+                @Aim.started += instance.OnAim;
+                @Aim.performed += instance.OnAim;
+                @Aim.canceled += instance.OnAim;
             }
 
             /// <summary>
@@ -548,6 +577,9 @@ namespace PlayerInput
                 @Reload.started -= instance.OnReload;
                 @Reload.performed -= instance.OnReload;
                 @Reload.canceled -= instance.OnReload;
+                @Aim.started -= instance.OnAim;
+                @Aim.performed -= instance.OnAim;
+                @Aim.canceled -= instance.OnAim;
             }
 
             /// <summary>
@@ -657,6 +689,13 @@ namespace PlayerInput
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnReload(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Aim" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnAim(InputAction.CallbackContext context);
         }
     }
 }

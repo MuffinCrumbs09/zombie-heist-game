@@ -1,3 +1,4 @@
+using PlayerInput;
 using UnityEngine;
 
 namespace Player
@@ -52,7 +53,7 @@ namespace Player
 
         public float GetTargetFOV()
         {
-            return config.fovBase - 5;
+            return InputManager.Instance.IsAiming ? config.fovAds - 5 : config.fovBase - 5; 
         }
     }
 }
