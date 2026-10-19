@@ -1,7 +1,7 @@
 public interface IAmmo
 {
-    int GetAmmo();
-    int GetMaxAmmo();
-    int GetMaxAmmoPerClip();
-    string GetAmmoText() => $"{GetAmmo()}/{GetMaxAmmo()}";
+    public int GetAmmo();
+    public int GetMaxAmmo();
+    public int GetMaxAmmoPerClip();
+    public string GetAmmoText() => $"{GetAmmo()}/{GetMaxAmmo()}";
 }
