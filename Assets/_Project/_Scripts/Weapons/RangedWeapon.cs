@@ -1,4 +1,5 @@
 using System.Collections;
+using Player;
 using PlayerInput;
 using UnityEngine;
 
@@ -22,6 +23,7 @@ public abstract class RangedWeapon : MonoBehaviour, IAmmo
     private bool hasTarget;
 
     private WeaponStates state = WeaponStates.Idle;
+    public WeaponStates State => state; // Getter
 
     // Ammunition
     protected int _ammo;
@@ -51,12 +53,13 @@ public abstract class RangedWeapon : MonoBehaviour, IAmmo
     protected virtual void Update()
     {
         UpdateWeaponPosition();
+        AimManager();
     }
     #endregion
 
     private void Reload()
     {
-        if (_ammo == maxAmmoPerClip || maxAmmo == 0)
+        if (_ammo == maxAmmoPerClip || maxAmmo == 0 || AmmoManager.Instance._isReloading)
             return;
 
         int toAdd = maxAmmoPerClip - _ammo;
@@ -74,6 +77,20 @@ public abstract class RangedWeapon : MonoBehaviour, IAmmo
     public void UpdateState(WeaponStates newState)
     {
         state = newState;
+    }
+
+    private void AimManager()
+    {
+        if (InputManager.Instance.IsAiming)
+        {
+            if (PlayerMovementController.Instance.CurrentState is PlayerCrouchState || PlayerMovementController.Instance.CurrentState is PlayerWalkState || PlayerMovementController.Instance.CurrentState is PlayerIdleState)
+                UpdateState(PlayerMovementController.Instance.IsCrouching ? WeaponStates.CrouchAiming : WeaponStates.Aiming);
+        }
+        else
+            UpdateState(PlayerMovementController.Instance.IsCrouching ? WeaponStates.Crouching : WeaponStates.Idle);
+
+        if (PlayerMovementController.Instance.CurrentState is PlayerSprintState || PlayerMovementController.Instance.CurrentState is PlayerSlideState)
+            UpdateState(WeaponStates.Idle);
     }
 
     Vector3 targetPosition;

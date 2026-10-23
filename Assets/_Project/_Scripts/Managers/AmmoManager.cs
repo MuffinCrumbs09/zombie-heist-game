@@ -13,7 +13,7 @@ public class AmmoManager : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float flashSpeed = 1f;
 
-    private bool _isReloading;
+    public bool _isReloading { get; private set; }
 
     [HideInInspector] public IAmmo _curWeapon { get; private set; }
 

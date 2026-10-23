@@ -9,15 +9,13 @@ namespace Player
     [RequireComponent(typeof(CharacterController))]
     public class PlayerMovementController : MonoBehaviour
     {
+        public static PlayerMovementController Instance { get; private set; }
         // Components
         private CharacterController _characterController;
         [SerializeField] private Transform _cameraTransform;
         [SerializeField] private PlayerMovementConfig _config;
         [SerializeField] private float _slideCooldownTime = 3.5f;
         [SerializeField] private Camera[] cameras;
-
-        // Temporary bow setter until weapon class has been made
-        [SerializeField] private BowController weapon;
 
         // Runtime
         private bool _isSwitchingStates = false;
@@ -39,6 +37,7 @@ namespace Player
 
         // Getters / Setters
         public PlayerMovementConfig Config => _config;
+        public IMovementState CurrentState => _curState;
         public bool CanJump => _canJump;
         public bool IsGrounded => _isGrounded;
         public bool IsCrouching => _isCrouching;
@@ -68,6 +67,14 @@ namespace Player
             InputManager.Instance.OnJumpPressed -= TryJump;
         }
 
+        private void Awake()
+        {
+            if (Instance != null && Instance != this)
+                Destroy(this);
+
+            Instance = this;
+        }
+
         private void Start()
         {
             InputManager.Instance.OnJumpPressed += TryJump;
@@ -92,19 +99,6 @@ namespace Player
             UpdateGroundCheck();
             UpdateHeight(Time.deltaTime);
             UpdateCameraEffects();
-
-            // Move this to base ranged weapon script (when created) with _isCrouching getter??
-
-
-            if (InputManager.Instance.IsAiming)
-            {
-                if (_curState is PlayerCrouchState || _curState is PlayerWalkState || _curState is PlayerIdleState)
-                    weapon.UpdateState(_isCrouching ? WeaponStates.CrouchAiming : WeaponStates.Aiming);
-            }
-            else
-                weapon.UpdateState(_isCrouching ? WeaponStates.Crouching : WeaponStates.Idle);
-
-
 
 #if UNITY_EDITOR
             UpdateDebugText();
