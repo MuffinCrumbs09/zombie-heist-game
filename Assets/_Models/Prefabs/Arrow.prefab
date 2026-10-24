@@ -75,6 +75,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Arrow
   rotationSpeed: 10
+  lifeTime: 240
   ignoreTags:
   - Player
   - Projectile

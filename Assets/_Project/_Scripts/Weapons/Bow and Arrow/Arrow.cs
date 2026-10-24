@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -5,6 +6,7 @@ public class Arrow : MonoBehaviour
 {
     private Rigidbody _rb;
     [SerializeField] private float rotationSpeed = 10f;
+    [SerializeField, Tooltip("Lifetime of the arrow in seconds, once landed")] private float lifeTime = 10f;
     private bool hasCollided = false;
     [SerializeField, Tooltip("Tags of objects to ignore collisions with")] private string[] ignoreTags;
 
@@ -39,5 +41,12 @@ public class Arrow : MonoBehaviour
         _rb.isKinematic = true; // stop it dead, stick in place
         transform.SetParent(collision.transform); // parents to the object it hit, so it moves with it
         GetComponent<Collider>().enabled = false; // disable the collider so it doesn't interfere with other physics
+        StartCoroutine(DestroyAfterTime());
+    }
+
+    private IEnumerator DestroyAfterTime()
+    {
+        yield return new WaitForSeconds(lifeTime);
+        Destroy(gameObject);
     }
 }

@@ -6,6 +6,7 @@ public class BowController : RangedWeapon
 {
     public readonly static int BowIsFiringHash = Animator.StringToHash("IsFiring");
 
+    [Header("Bow Settings")]
     [SerializeField] private GameObject arrowPrefab;
     [SerializeField] private Transform arrowSpawnPoint;
     [SerializeField] private GameObject viewArrowModel;

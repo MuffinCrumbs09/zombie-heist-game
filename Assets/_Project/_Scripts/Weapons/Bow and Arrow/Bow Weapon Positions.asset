@@ -16,7 +16,7 @@ MonoBehaviour:
   IdleRotation: {x: 270, y: 0, z: 0}
   AimPosition: {x: 0.83, y: -0.1, z: 1.83}
   AimRotation: {x: 270.8365, y: 97.48231, z: 277.49432}
-  CrouchPosition: {x: 0.489, y: -0.323, z: 1.819}
+  CrouchPosition: {x: 0.489, y: -0.75, z: 1.819}
   CrouchRotation: {x: 4.5057735, y: 268.72977, z: 93.09367}
-  CrouchAimPosition: {x: 0.489, y: -0.323, z: 1.44}
+  CrouchAimPosition: {x: 0.489, y: -0.6, z: 1.44}
   CrouchAimRotation: {x: 4.5057735, y: 268.72977, z: 93.09367}

@@ -13,22 +13,29 @@ public enum WeaponStates
 
 public abstract class RangedWeapon : MonoBehaviour, IAmmo
 {
+    [Header("Weapon Components")]
     [SerializeField] private WeaponPositions weaponPositions;
     [SerializeField] protected Camera playerCamera;
     [SerializeField] protected Animator weaponAnimator;
 
+    [Header("Weapon Position Settings")]
     [SerializeField] private float positionSmoothSpeed = 12f;
     [SerializeField] private float rotationSmoothSpeed = 12f;
+
+    [Header("Sway Settings")]
+    [SerializeField] private float smooth;
+    [SerializeField] private float swayMultiplier;
 
     private bool hasTarget;
 
     private WeaponStates state = WeaponStates.Idle;
     public WeaponStates State => state; // Getter
 
-    // Ammunition
-    protected int _ammo;
+    [Header("Ammunition Settings")]
     [SerializeField] protected int maxAmmo = 8;
     [SerializeField] protected int maxAmmoPerClip = 1;
+    protected int _ammo;
+
 
     #region Unity Functions
     private void OnEnable()
@@ -53,6 +60,7 @@ public abstract class RangedWeapon : MonoBehaviour, IAmmo
     protected virtual void Update()
     {
         UpdateWeaponPosition();
+        WeaponSway();
         AimManager();
     }
     #endregion
@@ -139,6 +147,20 @@ public abstract class RangedWeapon : MonoBehaviour, IAmmo
             Quaternion.Euler(targetRotation),
             rotationBlend);
 
+    }
+
+    private void WeaponSway()
+    {
+        Vector2 lookInput = InputManager.Instance.LookInput;
+        float mouseX = lookInput.x * swayMultiplier;
+        float mouseY = lookInput.y * swayMultiplier;
+
+        Quaternion rotationX = Quaternion.AngleAxis(-mouseY, Vector3.right);
+        Quaternion rotationY = Quaternion.AngleAxis(mouseX, Vector3.up);
+
+        Quaternion targetRotation = rotationX * rotationY;
+
+        transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, smooth * Time.deltaTime);
     }
 
     public abstract void Shoot();

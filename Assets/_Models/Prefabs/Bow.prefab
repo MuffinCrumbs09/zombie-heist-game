@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 19.515566, y: 0.00000039605092, z: -1.8611345}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
+  m_LocalScale: {x: 0.8, y: 0.8000001, z: 0.8000001}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1192577550431003706}
@@ -73,16 +73,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 199c290a26948c64e98e7ebace017eb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BowController
+  weaponPositions: {fileID: 11400000, guid: 69c4ee9a0adc99a4982074961dc5f4de, type: 2}
+  playerCamera: {fileID: 0}
+  weaponAnimator: {fileID: 9176752318832902066}
+  positionSmoothSpeed: 15
+  rotationSmoothSpeed: 15
+  smooth: 2
+  swayMultiplier: 2
+  maxAmmo: 8
+  maxAmmoPerClip: 1
   arrowPrefab: {fileID: 2638870370712645592, guid: 44925161db6fe4f4a898c9b69f03bd92, type: 3}
   arrowSpawnPoint: {fileID: 8604508509678382215}
-  playerCamera: {fileID: 0}
-  bowAnimator: {fileID: 9176752318832902066}
   viewArrowModel: {fileID: 3806120402518386057}
   minForce: 5
   maxForce: 40
   maxDrawTime: 2
-  maxAmmo: 8
-  maxAmmoPerClip: 1
 --- !u!1 &2121739680618381744
 GameObject:
   m_ObjectHideFlags: 0
