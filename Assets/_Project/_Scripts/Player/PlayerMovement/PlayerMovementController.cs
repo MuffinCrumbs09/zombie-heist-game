@@ -33,7 +33,7 @@ namespace Player
         private float _heightVelocity;
         private bool _slideCooldown;
 
-        private bool _isCrouching => _curState is PlayerCrouchState;
+        private bool _isCrouching => _curState is PlayerCrouchState || _curState is PlayerSlideState;
 
         // Getters / Setters
         public PlayerMovementConfig Config => _config;

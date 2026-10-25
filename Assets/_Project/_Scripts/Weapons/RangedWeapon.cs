@@ -18,6 +18,10 @@ public abstract class RangedWeapon : MonoBehaviour, IAmmo
     [SerializeField] protected Camera playerCamera;
     [SerializeField] protected Animator weaponAnimator;
 
+    [Header("IK Components")]
+    [SerializeField] private Transform rightHandTarget; [SerializeField] private Transform leftHandTarget;
+    [SerializeField] private Transform rightHandHint; [SerializeField] private Transform leftHandHint;
+
     [Header("Weapon Position Settings")]
     [SerializeField] private float positionSmoothSpeed = 12f;
     [SerializeField] private float rotationSmoothSpeed = 12f;
@@ -27,6 +31,7 @@ public abstract class RangedWeapon : MonoBehaviour, IAmmo
     [SerializeField] private float swayMultiplier;
 
     private bool hasTarget;
+    private bool hasIKTargets => rightHandTarget != null && leftHandTarget != null && rightHandHint != null && leftHandHint != null;
 
     private WeaponStates state = WeaponStates.Idle;
     public WeaponStates State => state; // Getter
@@ -97,12 +102,18 @@ public abstract class RangedWeapon : MonoBehaviour, IAmmo
         else
             UpdateState(PlayerMovementController.Instance.IsCrouching ? WeaponStates.Crouching : WeaponStates.Idle);
 
-        if (PlayerMovementController.Instance.CurrentState is PlayerSprintState || PlayerMovementController.Instance.CurrentState is PlayerSlideState)
+        if (PlayerMovementController.Instance.CurrentState is PlayerSprintState)
             UpdateState(WeaponStates.Idle);
+        else if (PlayerMovementController.Instance.CurrentState is PlayerSlideState)
+            UpdateState(WeaponStates.Crouching);
     }
 
     Vector3 targetPosition;
     Vector3 targetRotation;
+    Vector3 rightHandTargetPosition; Vector3 rightHandTargetRotation;
+    Vector3 rightHandHintPosition;
+    Vector3 leftHandTargetPosition; Vector3 leftHandTargetRotation;
+    Vector3 leftHandHintPosition;
     WeaponStates oldState;
     private void UpdateWeaponPosition()
     {
@@ -113,40 +124,108 @@ public abstract class RangedWeapon : MonoBehaviour, IAmmo
                 case WeaponStates.Idle:
                     targetPosition = weaponPositions.IdlePosition;
                     targetRotation = weaponPositions.IdleRotation;
+                    IKSetup();
                     break;
                 case WeaponStates.Aiming:
                     targetPosition = weaponPositions.AimPosition;
                     targetRotation = weaponPositions.AimRotation;
+                    IKSetup();
                     break;
                 case WeaponStates.Crouching:
                     targetPosition = weaponPositions.CrouchPosition;
                     targetRotation = weaponPositions.CrouchRotation;
+                    IKSetup();
                     break;
                 case WeaponStates.CrouchAiming:
                     targetPosition = weaponPositions.CrouchAimPosition;
                     targetRotation = weaponPositions.CrouchAimRotation;
+                    IKSetup();
                     break;
             }
             oldState = state;
             hasTarget = true;
         }
 
-        if (targetPosition == Vector3.zero || targetRotation == Vector3.zero)
-            return;
-
         float positionBlend = 1f - Mathf.Exp(-positionSmoothSpeed * Time.deltaTime);
         float rotationBlend = 1f - Mathf.Exp(-rotationSmoothSpeed * Time.deltaTime);
 
-        transform.localPosition = Vector3.Lerp(
-            transform.localPosition,
-            targetPosition,
-            positionBlend);
+        if (targetPosition != Vector3.zero && targetRotation != Vector3.zero)
+        {
+            transform.localPosition = Vector3.Lerp(
+                transform.localPosition,
+                targetPosition,
+                positionBlend);
 
-        transform.localRotation = Quaternion.Slerp(
-            transform.localRotation,
-            Quaternion.Euler(targetRotation),
-            rotationBlend);
+            transform.localRotation = Quaternion.Slerp(
+                transform.localRotation,
+                Quaternion.Euler(targetRotation),
+                rotationBlend);
+        }
 
+        // IK is applied independently so an unset weapon target never blocks it
+        IKMovement(positionBlend, rotationBlend);
+
+        void IKSetup()
+        {
+            if (!hasIKTargets)
+                return;
+
+            bool isCrouched = state == WeaponStates.Crouching || state == WeaponStates.CrouchAiming;
+            if (isCrouched)
+            {
+                rightHandTargetPosition = weaponPositions.RightHandCrouchPosition;
+                rightHandTargetRotation = weaponPositions.RightHandCrouchRotation;
+                rightHandHintPosition = weaponPositions.RightHandCrouchHintPosition;
+                leftHandTargetPosition = weaponPositions.LeftHandCrouchPosition;
+                leftHandTargetRotation = weaponPositions.LeftHandCrouchRotation;
+                leftHandHintPosition = weaponPositions.LeftHandCrouchHintPosition;
+            }
+            else
+            {
+                rightHandTargetPosition = weaponPositions.RightHandStandingPosition;
+                rightHandTargetRotation = weaponPositions.RightHandStandingRotation;
+                rightHandHintPosition = weaponPositions.RightHandHintPosition;
+                leftHandTargetPosition = weaponPositions.LeftHandStandingPosition;
+                leftHandTargetRotation = weaponPositions.LeftHandStandingRotation;
+                leftHandHintPosition = weaponPositions.LeftHandHintPosition;
+            }
+        }
+
+        void IKMovement(float positionBlend, float rotationBlend)
+        {
+            if (!hasIKTargets)
+                return;
+
+            rightHandTarget.localPosition = Vector3.Lerp(
+                rightHandTarget.localPosition,
+                rightHandTargetPosition,
+                positionBlend);
+
+            rightHandTarget.localRotation = Quaternion.Slerp(
+                rightHandTarget.localRotation,
+                Quaternion.Euler(rightHandTargetRotation),
+                rotationBlend);
+
+            rightHandHint.localPosition = Vector3.Lerp(
+                rightHandHint.localPosition,
+                rightHandHintPosition,
+                positionBlend);
+
+            leftHandTarget.localPosition = Vector3.Lerp(
+                leftHandTarget.localPosition,
+                leftHandTargetPosition,
+                positionBlend);
+
+            leftHandTarget.localRotation = Quaternion.Slerp(
+                leftHandTarget.localRotation,
+                Quaternion.Euler(leftHandTargetRotation),
+                rotationBlend);
+
+            leftHandHint.localPosition = Vector3.Lerp(
+                leftHandHint.localPosition,
+                leftHandHintPosition,
+                positionBlend);
+        }
     }
 
     private void WeaponSway()

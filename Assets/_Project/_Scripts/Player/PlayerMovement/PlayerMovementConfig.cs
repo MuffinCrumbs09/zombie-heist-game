@@ -98,7 +98,9 @@ namespace Player
         public float fovBase = 90f;
 
         [Tooltip("Degrees added to base FOV while sprinting")]
-        public float fovSprintKick = 8f;
+        public float fovSprintKick = 8f;        
+        [Tooltip("Multiplier applied to base FOV while sliding")]
+        public float fovSlideMultiplier = 1.1f;
 
         [Tooltip("Target FOV while aiming down sights")]
         public float fovAds = 55f;

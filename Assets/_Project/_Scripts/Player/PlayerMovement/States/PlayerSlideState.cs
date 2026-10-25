@@ -98,7 +98,8 @@ namespace Player
 
         public float GetTargetFOV()
         {
-            return config.fovBase + config.fovAds;
+            // return config.fovBase + config.fovAds;
+            return config.fovBase * config.fovSlideMultiplier;
         }
     }
 }
